@@ -40,7 +40,7 @@ int main() {
     for(t=0; t<NUM_THREADS; t++) {
         rc = pthread_join(threads[t], &status);
 
-        printf("Returned: %d\n", (int)status);
+        //printf("Returned: %d\n", (int)status);
 
         if (rc) {
             printf("ERROR; return code from pthread_join() is %d\n", rc);
