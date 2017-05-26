@@ -6,7 +6,7 @@
 #define NUM_THREADS 5
 
 struct thread_data {
-    int number;
+    long number;
     int sum;
 };
 
@@ -16,8 +16,13 @@ void *myThread(void *data) {
     struct thread_data *m;
     m = (struct thread_data *) data;
     printf("Thread #%u working...\n", (int)pthread_self());
-    printf("Number #%i\n", m->number);
-    long result = pow( 2, (double)m->number);
+    
+    long result = m->number * 3;
+    m->number = result;
+
+    //printf("\n%i\n", m->number * 2);
+
+    printf("Finished #%lu\n", result);
 
     return (void *) result;
 }
@@ -35,8 +40,12 @@ int main() {
 
         tda[t].number = t;
         pthread_create(&threads[t], NULL, myThread, (void*)&tda[t]);
-        printf("%d\n", (int)status);
+        //printf("After: %lu\n", (long)tda[t].number);
 
+    }
+
+    for(t=0; t<NUM_THREADS; t++) {
+        printf("Main: completed with... %lu\n", tda[t].number);
     }
 
     // pthread_attr_destroy(&attr);
