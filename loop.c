@@ -9,7 +9,7 @@ struct prime_data {
     long exponent;
 };
 
-struct prime_data pd;
+struct prime_data pd[NUM_THREADS];
 
 
 void *prime(void *ptr) {
@@ -29,7 +29,7 @@ int main() {
     pthread_t thread_id[NUM_THREADS];
     for(k=0; k<20; k++) {
         for(i=0; i < NUM_THREADS; i++) {
-            pd.exponent = pop(&s);
+            pd[i].exponent = pop(&s);
             pthread_create( &thread_id[i], NULL, prime, NULL );
         }
         for(j=0; j < NUM_THREADS; j++) {
