@@ -23,13 +23,14 @@ int main() {
     for(t=0; t<NUM_THREADS; t++){
 
         pthread_create(&threads[t], &attr, myThread, NULL);
-        printf("%d\n",(int)status);
 
     }
 
     pthread_attr_destroy(&attr);
     for(t=0; t<NUM_THREADS; t++) {
         rc = pthread_join(threads[t], &status);
+        printf("Returned: %d\n", (int)status);
+        
         if (rc) {
             printf("ERROR; return code from pthread_join() is %d\n", rc);
             exit(-1);
