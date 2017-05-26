@@ -16,12 +16,13 @@ void *prime(void *ptr) {
 
 int main() {
     pthread_t thread_id[NUM_THREADS];
-    int i, j;
-
-    for(i=0; i < NUM_THREADS; i++) {
-        pthread_create( &thread_id[i], NULL, prime, NULL );
-    }
-    for(j=0; j < NUM_THREADS; j++) {
-        pthread_join( thread_id[j], NULL);
+    int i, j, k;
+    for(k=0; k<100; k++) {
+        for(i=0; i < NUM_THREADS; i++) {
+            pthread_create( &thread_id[i], NULL, prime, NULL );
+        }
+        for(j=0; j < NUM_THREADS; j++) {
+            pthread_join( thread_id[j], NULL);
+        }
     }
 }
