@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include <math.h>
 
-#define NUM_THREADS 8
+#define NUM_THREADS 4
 
 struct thread_data {
     long number;
