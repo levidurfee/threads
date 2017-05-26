@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <math.h>
 
-#define NUM_THREADS 4
+#define NUM_THREADS 60
 
 struct thread_data {
     int number;
@@ -15,7 +16,8 @@ void *myThread(void *data) {
     struct thread_data *m;
     m = (struct thread_data *) data;
     printf("Thread #%u working...\n", (int)pthread_self());
-    int result = m->number * 2;
+    long result = pow( 2, (double)m->number);
+
     return (void *) result;
 }
 
@@ -25,7 +27,6 @@ int main() {
     int rc;
     pthread_t threads[NUM_THREADS];
     pthread_attr_t attr;
-
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
@@ -33,14 +34,13 @@ int main() {
 
         tda[t].number = t;
         pthread_create(&threads[t], &attr, myThread, (void*)&tda[t]);
+        //printf("%d\n",(int)status);
 
     }
 
     pthread_attr_destroy(&attr);
     for(t=0; t<NUM_THREADS; t++) {
         rc = pthread_join(threads[t], &status);
-
-        //printf("Returned: %d\n", (int)status);
 
         if (rc) {
             printf("ERROR; return code from pthread_join() is %d\n", rc);
