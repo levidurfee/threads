@@ -1,1 +1,1 @@
-gcc -o f thread.c -lpthread -O3 ;./f
+gcc -o f loop.c -lpthread -O3 ;./f

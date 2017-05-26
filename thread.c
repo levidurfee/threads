@@ -36,7 +36,7 @@ int main() {
     // pthread_attr_init(&attr);
     // pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-    for(t=0; t<NUM_THREADS; t++) {
+    for(t=0; t<100; t++) {
 
         tda[t].number = t;
         pthread_create(&threads[t], NULL, myThread, (void*)&tda[t]);
