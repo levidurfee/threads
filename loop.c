@@ -9,11 +9,19 @@ struct prime_data {
 };
 
 void *prime(void *ptr) {
-    printf("Thread number %ld\n", pthread_self());
+    printf("Thread number %ld\n", (long)pthread_self());
+    long i = 0;
+    return (void *) i;
 }
 
 int main() {
     pthread_t thread_id[NUM_THREADS];
     int i, j;
 
+    for(i=0; i < NUM_THREADS; i++) {
+        pthread_create( &thread_id[i], NULL, prime, NULL );
+    }
+    for(j=0; j < NUM_THREADS; j++) {
+        pthread_join( thread_id[j], NULL);
+    }
 }
