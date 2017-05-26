@@ -2,12 +2,21 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-#define NUM_THREADS 8
+#define NUM_THREADS 4
 
-void *myThread()
-{
+struct thread_data {
+    int number;
+    int sum;
+};
+
+struct thread_data tda[NUM_THREADS];
+
+void *myThread(void *data) {
+    struct thread_data *m;
+    m = (struct thread_data *) data;
     printf("Thread #%u working...\n", (int)pthread_self());
-    return (void *) 42;
+    int result = m->number * 2;
+    return (void *) result;
 }
 
 int main() {
@@ -20,17 +29,19 @@ int main() {
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-    for(t=0; t<NUM_THREADS; t++){
+    for(t=0; t<NUM_THREADS; t++) {
 
-        pthread_create(&threads[t], &attr, myThread, NULL);
+        tda[t].number = t;
+        pthread_create(&threads[t], &attr, myThread, (void*)&tda[t]);
 
     }
 
     pthread_attr_destroy(&attr);
     for(t=0; t<NUM_THREADS; t++) {
         rc = pthread_join(threads[t], &status);
+
         printf("Returned: %d\n", (int)status);
-        
+
         if (rc) {
             printf("ERROR; return code from pthread_join() is %d\n", rc);
             exit(-1);
