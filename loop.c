@@ -9,5 +9,7 @@ struct prime_data {
 };
 
 int main() {
+    pthread_t thread_id[NUM_THREADS];
+    int i, j;
 
 }
