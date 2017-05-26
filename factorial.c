@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <math.h>
 
-#define NUM_THREADS 60
+#define NUM_THREADS 4
 
 struct thread_data {
     int number;
@@ -26,15 +26,15 @@ int main() {
     long t;
     int rc;
     pthread_t threads[NUM_THREADS];
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    // pthread_attr_t attr;
+    // pthread_attr_init(&attr);
+    // pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-    for(t=0; t<100; t++) {
+    for(t=0; t<60; t++) {
 
         tda[t].number = t;
-        pthread_create(&threads[t], &attr, myThread, (void*)&tda[t]);
-        //printf("%d\n",(int)status);
+        pthread_create(&threads[t], N, myThread, (void*)&tda[t]);
+        printf("%d\n",(int)status);
         //
         //pthread_attr_destroy(&attr);
         rc = pthread_join(threads[t], &status);
