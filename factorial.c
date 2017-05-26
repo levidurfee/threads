@@ -30,16 +30,13 @@ int main() {
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-    for(t=0; t<NUM_THREADS; t++) {
+    for(t=0; t<100; t++) {
 
         tda[t].number = t;
         pthread_create(&threads[t], &attr, myThread, (void*)&tda[t]);
         //printf("%d\n",(int)status);
-
-    }
-
-    pthread_attr_destroy(&attr);
-    for(t=0; t<NUM_THREADS; t++) {
+        //
+        //pthread_attr_destroy(&attr);
         rc = pthread_join(threads[t], &status);
 
         if (rc) {
@@ -47,6 +44,12 @@ int main() {
             exit(-1);
         }
         printf("Main: completed join with thread %ld having a status of %ld\n",t,(long)status);
+
+    }
+
+    
+    for(t=0; t<NUM_THREADS; t++) {
+        
     }
 
     pthread_exit(NULL);
